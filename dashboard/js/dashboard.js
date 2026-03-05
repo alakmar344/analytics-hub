@@ -7,6 +7,16 @@
 // ── Helpers ───────────────────────────────────────────────────
 function el(id) { return document.getElementById(id); }
 
+function escHtml(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function toast(msg, type = 'success') {
   const t = el('toast');
   t.textContent = msg;
@@ -211,12 +221,12 @@ async function loadLog(page = 1) {
     } else {
       tbody.innerHTML = data.events.map((e) => `
         <tr>
-          <td>${fmt(e.timestamp)}</td>
-          <td><span class="badge">${e.event}</span></td>
-          <td title="${e.page}">${truncate(e.page, 35)}</td>
-          <td title="${e.referrer}">${truncate(e.referrer, 30)}</td>
-          <td title="${e.hashedIp}">${e.hashedIp.slice(0, 12)}…</td>
-          <td title="${e.userAgent}">${truncate(e.userAgent, 30)}</td>
+          <td>${escHtml(fmt(e.timestamp))}</td>
+          <td><span class="badge">${escHtml(e.event)}</span></td>
+          <td title="${escHtml(e.page)}">${escHtml(truncate(e.page, 35))}</td>
+          <td title="${escHtml(e.referrer)}">${escHtml(truncate(e.referrer, 30))}</td>
+          <td title="${escHtml(e.hashedIp)}">${escHtml((e.hashedIp || '').slice(0, 12))}…</td>
+          <td title="${escHtml(e.userAgent)}">${escHtml(truncate(e.userAgent, 30))}</td>
         </tr>
       `).join('');
     }
