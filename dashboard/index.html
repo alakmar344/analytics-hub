@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics Hub – Esamz AI</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Chart.js for visualisations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- ═══ Sidebar ═══════════════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">Analytics Hub</span>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="#overview"   class="nav-link active" data-section="overview">📊 Overview</a>
+      <a href="#pages"      class="nav-link"         data-section="pages">📄 Top Pages</a>
+      <a href="#events"     class="nav-link"         data-section="events">🔔 Events</a>
+      <a href="#log"        class="nav-link"         data-section="log">📋 Event Log</a>
+    </nav>
+    <div class="sidebar__footer">Esamz AI © 2024</div>
+  </aside>
+
+  <!-- ═══ Main content ══════════════════════════════════════════════════ -->
+  <main class="main">
+    <!-- Top bar -->
+    <header class="topbar">
+      <h1 class="topbar__title" id="section-title">Overview</h1>
+      <div class="topbar__controls">
+        <label for="range-from">From</label>
+        <input type="date" id="range-from" />
+        <label for="range-to">To</label>
+        <input type="date" id="range-to" />
+        <button id="btn-refresh" class="btn btn--primary">Refresh</button>
+      </div>
+    </header>
+
+    <!-- ── Overview section ──────────────────────────────────────────── -->
+    <section id="section-overview" class="section active">
+      <!-- KPI cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-card__label">Total Events</div>
+          <div class="kpi-card__value" id="kpi-total">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card__label">Unique Visitors</div>
+          <div class="kpi-card__value" id="kpi-visitors">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card__label">Top Event</div>
+          <div class="kpi-card__value" id="kpi-top-event">—</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-card__label">Top Page</div>
+          <div class="kpi-card__value kpi-card__value--small" id="kpi-top-page">—</div>
+        </div>
+      </div>
+
+      <!-- Events over time chart -->
+      <div class="chart-card">
+        <h2 class="chart-card__title">Events Over Time</h2>
+        <canvas id="chart-timeline"></canvas>
+      </div>
+    </section>
+
+    <!-- ── Top Pages section ──────────────────────────────────────────── -->
+    <section id="section-pages" class="section">
+      <div class="chart-card">
+        <h2 class="chart-card__title">Top Pages</h2>
+        <canvas id="chart-pages"></canvas>
+      </div>
+    </section>
+
+    <!-- ── Event Breakdown section ───────────────────────────────────── -->
+    <section id="section-events" class="section">
+      <div class="chart-card">
+        <h2 class="chart-card__title">Event Type Breakdown</h2>
+        <canvas id="chart-events"></canvas>
+      </div>
+    </section>
+
+    <!-- ── Event Log section ──────────────────────────────────────────── -->
+    <section id="section-log" class="section">
+      <div class="chart-card">
+        <h2 class="chart-card__title">Recent Events</h2>
+        <div class="table-controls">
+          <input type="text" id="log-filter-event" placeholder="Filter by event type…" class="input" />
+          <button id="btn-load-log" class="btn btn--secondary">Load</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Event</th>
+                <th>Page</th>
+                <th>Referrer</th>
+                <th>IP Hash</th>
+                <th>User Agent</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody">
+              <tr><td colspan="6" class="empty-row">Click "Load" to fetch events.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="log-pagination"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
