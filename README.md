@@ -7,6 +7,21 @@ A **privacy-first, self-hosted analytics platform** built for Esamz AI.
 - 🗄️ **MongoDB storage** – all events are persisted in MongoDB with Mongoose.
 - 📊 **Live dashboard** – a clean HTML/CSS/JS UI showing KPIs, charts, and a paginated event log.
 
+> ### 🔒 Proof, not promises
+> Privacy claims are auditable in this repo — no trust required:
+>
+> - The IP is hashed in middleware: `server/middleware/hashIp.js` —
+>   `crypto.createHmac('sha256', IP_HASH_SECRET).update(rawIp)` — and **the raw
+>   IP is never persisted anywhere in the codebase.**
+> - The hashing is **unit-tested** in `tests/hashIp.test.js` (verifies a
+>   64-char SHA-256 hex output, next() called, secret sensitivity, and
+>   `x-forwarded-for` handling).
+> - Route tests in `tests/routes.test.js` cover the event receiver.
+>
+> You can verify the "raw IP is never stored" claim yourself by grepping the
+> persistence layer for `remoteAddress` — it only appears in the hashing
+> middleware.
+
 ---
 
 ## Table of Contents
